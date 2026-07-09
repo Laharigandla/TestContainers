@@ -78,3 +78,4 @@ allure-report/
 # OS-generated files
 *.pid
 *.seed
+gradle/
