@@ -14,11 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: '21'
 
       # Installs Gradle 8.10.2 on the runner and puts `gradle` on PATH,
       # so the build does NOT need the committed gradle-wrapper.jar.
@@ -29,5 +29,9 @@ jobs:
         with:
           gradle-version: '8.10.2'
 
+      # Runs compile for the whole project, but only the Testcontainers +
+      # plain unit tests (org.testcontainers.sdet.*). The Selenium/Cucumber UI
+      # tests (org.selenium.sdet.*) need a running web app + browser, so they
+      # are excluded from CI. Run the full suite locally with `gradle test`.
       - name: Run tests
-        run: gradle clean test
+        run: gradle clean test --tests "org.testcontainers.sdet.*"
