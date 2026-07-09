@@ -35,3 +35,4 @@ jobs:
       # are excluded from CI. Run the full suite locally with `gradle test`.
       - name: Run tests
         run: gradle clean test --tests "org.testcontainers.sdet.*"
+
