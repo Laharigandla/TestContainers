@@ -37,6 +37,11 @@ dependencies {
     testImplementation("org.flywaydb:flyway-mysql:$flywayVersion")
 
     testImplementation("com.mysql:mysql-connector-j:$mysqlVersion")
+
+    // Allure
+    testImplementation(platform("io.qameta.allure:allure-bom:2.29.1"))
+    testImplementation("io.qameta.allure:allure-junit5")
+    testImplementation("io.qameta.allure:allure-cucumber7-jvm")
 }
 
 tasks.withType<JavaCompile>().configureEach {
@@ -51,6 +56,11 @@ tasks.withType<Test>().configureEach {
         providers.gradleProperty("baseUrl")
             .orElse("http://localhost:5173")
             .get()
+    )
+
+    systemProperty(
+        "allure.results.directory",
+        layout.buildDirectory.dir("allure-results").get().asFile.absolutePath
     )
 
     systemProperty(
