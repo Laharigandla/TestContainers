@@ -22,7 +22,7 @@ out/
 .idea/
 **/.idea/
 *.jar
-**/*.jar
+.gradle/
 
 # Eclipse
 .apt_generated
