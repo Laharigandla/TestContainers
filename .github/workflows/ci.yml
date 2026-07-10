@@ -75,3 +75,10 @@ jobs:
           branch: gh-pages
           folder: allure-history
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Report Link
+        if: always()
+        run: |
+            echo "✅ Order tests completed"
+            echo "📊 Offline report is available under Artifacts"
+            echo "🌐 GitHub Pages: https://Lahariganlda.github.io/TestContainers/"

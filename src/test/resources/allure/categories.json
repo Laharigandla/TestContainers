@@ -3,7 +3,8 @@
     "name": "Flaky tests",
     "matchedStatuses": [
       "failed",
-      "broken"
+      "broken",
+      "skipped"
     ],
     "messageRegex": ".*(timeout|stale element|connection reset).*",
     "flaky": true
