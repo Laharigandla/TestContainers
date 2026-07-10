@@ -2,13 +2,15 @@ name: Java CI
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
+
+permissions:
+  contents: write
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -29,14 +31,16 @@ jobs:
       - name: Run Tests
         run: gradle clean test
 
+      # Checkout previous gh-pages history
       - name: Checkout gh-pages
         if: always()
-        uses: actions/checkout@v4
         continue-on-error: true
+        uses: actions/checkout@v4
         with:
           ref: gh-pages
           path: gh-pages
 
+      # Generate report using previous history
       - name: Generate Allure Report
         if: always()
         uses: simple-elf/allure-report-action@master
@@ -46,6 +50,7 @@ jobs:
           gh_pages: gh-pages
           allure_history: allure-history
 
+      # Upload artifact (optional)
       - name: Upload Allure Report
         if: always()
         uses: actions/upload-artifact@v4
@@ -53,3 +58,11 @@ jobs:
           name: allure-report
           path: build/allure-report
 
+      # Publish history back to gh-pages
+      - name: Deploy Allure History
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
