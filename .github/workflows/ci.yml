@@ -25,18 +25,15 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Generate Gradle Wrapper
-        working-directory: Gradle
         run: gradle wrapper
 
       - name: Grant execute permission
-        working-directory: Gradle
         run: chmod +x gradlew
 
       - name: Run Integration Tests
-        working-directory: Gradle
         run: ./gradlew test --tests "sdet.reporting.W6D4ReportinginsightsTest" --no-configuration-cache
 
-      # Checkout previous gh-pages branch
+      # Checkout previous GitHub Pages branch (contains previous report)
       - name: Checkout gh-pages branch
         if: always()
         continue-on-error: true
@@ -45,26 +42,26 @@ jobs:
           ref: gh-pages
           path: gh-pages
 
-      # Copy previous history (IMPORTANT FOR TRENDS)
+      # Copy history from previous report
       - name: Copy Allure History
         if: always()
         run: |
-          mkdir -p Gradle/build/allure-results
+          mkdir -p build/allure-results
           if [ -d "gh-pages/history" ]; then
-            cp -R gh-pages/history Gradle/build/allure-results/history
+            cp -R gh-pages/history build/allure-results/history
           fi
 
-      # Generate new report
+      # Generate new Allure report
       - name: Generate Allure Report
         if: always()
         uses: simple-elf/allure-report-action@master
         with:
-          allure_results: Gradle/build/allure-results
+          allure_results: build/allure-results
           allure_report: allure-report
           gh_pages: gh-pages
           allure_history: allure-history
 
-      # Upload report artifact
+      # Upload report as artifact
       - name: Upload Allure Report
         if: always()
         uses: actions/upload-artifact@v4
@@ -72,7 +69,7 @@ jobs:
           name: allure-report
           path: allure-report
 
-      # Deploy to GitHub Pages
+      # Deploy report to GitHub Pages
       - name: Deploy Allure Report
         if: always()
         uses: JamesIves/github-pages-deploy-action@v4
