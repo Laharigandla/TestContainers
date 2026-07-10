@@ -81,4 +81,4 @@ jobs:
         run: |
             echo "✅ Order tests completed"
             echo "📊 Offline report is available under Artifacts"
-            echo "🌐 GitHub Pages: https://Lahariganlda.github.io/TestContainers/"
+            echo "🌐 GitHub Pages: https://laharigandla.github.io/TestContainers/"
