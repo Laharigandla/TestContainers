@@ -31,7 +31,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run Integration Tests
-        run: ./gradlew test --tests "sdet.reporting.W6D4ReportinginsightsTest" --no-configuration-cache
+        run: ./gradlew test --tests "sdet.reporting.ReportinginsightsTest" --no-configuration-cache
 
       # Checkout previous GitHub Pages branch (contains previous report)
       - name: Checkout gh-pages branch
