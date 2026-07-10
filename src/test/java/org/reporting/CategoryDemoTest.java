@@ -2,8 +2,9 @@ package org.reporting;
 
 
 import io.qameta.allure.*;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
+import io.qameta.allure.Flaky;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,6 +13,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @Feature("Allure Categories Demo")
 @Owner("Lahari")
 public class CategoryDemoTest {
+
+    @Test
+    @Flaky
+    void flakyTimeoutTest() {
+        throw new AssertionError("timeout while waiting for element");
+    }
 
     @Test
     @Story("Flaky Tests")
@@ -110,6 +117,18 @@ public class CategoryDemoTest {
     @Description("Simple passing test.")
     void passingTestThree() {
         assertNotNull("Allure");
+    }
+
+    @Test
+    @Disabled("Waiting for implementation")
+    @Story("Skipped Tests")
+    void skippedTestOne() {
+    }
+
+    @Test
+    @Disabled("Known issue")
+    @Story("Skipped Tests")
+    void skippedTestTwo() {
     }
 
 }
